@@ -1,0 +1,114 @@
+"""
+This file is used as routes for the enquiry app API's.
+"""
+
+from django.conf.urls import url
+from .views import (
+    GetUserEnquiryAPIView,
+    AddUserEnquiryAPIView,
+    GetUserEnquiryListView,
+    UpdateUserEnquiryAPIView,
+    GetCelebrityEnquiryAPIView,
+    AddCelebrityEnquiryAPIView,
+    UpdateCelebrityEnquiryAPIView,
+    GetCelebrityEnquiryListAPIView,
+    DeleteCelebEnquiryAPIView,
+    ContactDetailViewList,
+    CreateContactDetailViewAPI,
+)
+
+
+urlpatterns = [
+    url(
+        "v1/createContactDetailView",
+        CreateContactDetailViewAPI.as_view(),
+        name="create-contact-detail-view",
+    ),
+    url(
+        "v1/contactDetailViewList",
+        ContactDetailViewList.as_view(),
+        name="contact-view-list",
+    ),
+    url(
+        "v1/addCelebrityEnquiry",
+        AddCelebrityEnquiryAPIView.as_view(),
+        name="add-celebrity-enquiry",
+    ),
+    url(
+        "addCelebrityEnquiry",
+        AddCelebrityEnquiryAPIView.as_view(),
+        name="add-celebrity-enquiry",
+    ),
+    url(
+        "v1/getCelebrityEnquiryList",
+        GetCelebrityEnquiryListAPIView.as_view(),
+        name="get-celebrity-enquiries",
+    ),
+    url(
+        "getCelebrityEnquiryList",
+        GetCelebrityEnquiryListAPIView.as_view(),
+        name="get-celebrity-enquiries",
+    ),
+    url(
+        "v1/updateCelebrityEnquiry",
+        UpdateCelebrityEnquiryAPIView.as_view(),
+        name="update-celebrity-enquiry",
+    ),
+    url(
+        "updateCelebrityEnquiry",
+        UpdateCelebrityEnquiryAPIView.as_view(),
+        name="update-celebrity-enquiry",
+    ),
+    url("v1/addUserEnquiry", AddUserEnquiryAPIView.as_view(), name="add-user-enquiry"),
+    url("addUserEnquiry", AddUserEnquiryAPIView.as_view(), name="add-user-enquiry"),
+    url(
+        "v1/getUserEnquiryList",
+        GetUserEnquiryListView.as_view(),
+        name="get-user-enquiries",
+    ),
+    url(
+        "getUserEnquiryList",
+        GetUserEnquiryListView.as_view(),
+        name="get-user-enquiries",
+    ),
+    url(
+        "v1/updateUserEnquiry/(?P<pk>.+)",
+        UpdateUserEnquiryAPIView.as_view(),
+        name="update-user-enquiry",
+    ),
+    url(
+        "updateUserEnquiry/(?P<pk>.+)",
+        UpdateUserEnquiryAPIView.as_view(),
+        name="update-user-enquiry",
+    ),
+    url(
+        "v1/getUserEnquiry/(?P<pk>.+)",
+        GetUserEnquiryAPIView.as_view(),
+        name="get-celebrity-enquiry",
+    ),
+    url(
+        "getUserEnquiry/(?P<pk>.+)",
+        GetUserEnquiryAPIView.as_view(),
+        name="get-celebrity-enquiry",
+    ),
+    url(
+        "v1/getCelebrityEnquiry/(?P<pk>.+)",
+        GetCelebrityEnquiryAPIView.as_view(),
+        name="get-celebrity-enquiry",
+    ),
+    url(
+        "getCelebrityEnquiry/(?P<pk>.+)",
+        GetCelebrityEnquiryAPIView.as_view(),
+        name="get-celebrity-enquiry",
+    ),
+    url(
+        "v1/deleteCelebEnquiry/(?P<pk>.+)/",
+        DeleteCelebEnquiryAPIView.as_view(),
+        name="delete-celeb-enquiry",
+    ),
+    url(
+        "deleteCelebEnquiry/(?P<pk>.+)/",
+        DeleteCelebEnquiryAPIView.as_view(),
+        name="delete-celeb-enquiry",
+    ),
+]
