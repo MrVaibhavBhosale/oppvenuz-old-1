@@ -1,0 +1,57 @@
+FCM PATH /home/mindbowser/Desktop/oppvenuz/oppvenuz-api/oppvenuz/firebase/devoppvenuzreact-firebase-adminsdk-kvr6r-8e947f9e3f.json
+[
+{
+  "model": "service.venuetype",
+  "pk": 1,
+  "fields": {
+    "title": "Banquet Halls",
+    "slug": "banquet-halls",
+    "image": null
+  }
+},
+{
+  "model": "service.venuetype",
+  "pk": 2,
+  "fields": {
+    "title": "Resorts",
+    "slug": "resorts",
+    "image": null
+  }
+},
+{
+  "model": "service.venuetype",
+  "pk": 3,
+  "fields": {
+    "title": "Small Function / Party Halls",
+    "slug": "small-function-party-halls",
+    "image": null
+  }
+},
+{
+  "model": "service.venuetype",
+  "pk": 4,
+  "fields": {
+    "title": "Lawns / Farmhouse / Garden",
+    "slug": "lawns-farmhouse-garden",
+    "image": null
+  }
+},
+{
+  "model": "service.venuetype",
+  "pk": 5,
+  "fields": {
+    "title": "Destination Wedding",
+    "slug": "destination-wedding",
+    "image": null
+  }
+},
+{
+  "model": "service.venuetype",
+  "pk": 6,
+  "fields": {
+    "title": "4 star & above hotels",
+    "slug": "4-star-above-hotels",
+    "image": null
+  }
+}
+]
