@@ -14,6 +14,9 @@ PROJECT_ROOT = BASE_DIR
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
 ALLOWED_HOSTS = ["*"]
+STAGING_API_URL = config("STAGING_API_URL", default="https://staging.oppvenuz.com/api/", cast=str)
+PROD_API_URL = config("PROD_API_URL", default="https://www.oppvenuz.com/api/", cast=str)
+SOCIAL_AUTH_APPLE_ID_TEAM = config("SOCIAL_AUTH_APPLE_ID_TEAM", default="Y294V8N5W3", cast=str)
 
 AUTH_USER_MODEL = "users.CustomUser"
 
