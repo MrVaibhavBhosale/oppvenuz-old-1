@@ -11,13 +11,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.filters import SearchFilter
 from django.db.models import Q
-from oppvenuz.settings.settings import (
-    BASE_DIR,
-    PROJECT_ROOT,
-    STAGING_API_URL,
-    PROD_API_URL,
-    SOCIAL_AUTH_APPLE_ID_TEAM,
-)
+from django.conf import settings
 from fcm_django.models import FCMDevice
 from sendgrid.helpers.mail import Mail, Email, Personalization
 from rest_framework.views import APIView
