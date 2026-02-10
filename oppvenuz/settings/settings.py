@@ -2,21 +2,22 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from decouple import config
-import json
 from firebase_admin import initialize_app, credentials
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-# =========================
-# SECURITY
-# =========================
+# =====================================================
+# BASIC
+# =====================================================
 SECRET_KEY = config("SECRET_KEY")
-DEBUG = False
+DEBUG = config("DEBUG", default=False, cast=bool)
 ALLOWED_HOSTS = ["*"]
 
-# =========================
+AUTH_USER_MODEL = "users.CustomUser"
+
+# =====================================================
 # APPS
-# =========================
+# =====================================================
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -50,11 +51,9 @@ INSTALLED_APPS = [
     "seo",
 ]
 
-AUTH_USER_MODEL = "users.CustomUser"
-
-# =========================
+# =====================================================
 # MIDDLEWARE
-# =========================
+# =====================================================
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -67,9 +66,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# =========================
-# DATABASE
-# =========================
+CORS_ALLOW_ALL_ORIGINS = True
+
+# =====================================================
+# DATABASE (Render ENV)
+# =====================================================
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -77,28 +78,27 @@ DATABASES = {
         "USER": config("DB_USER"),
         "PASSWORD": config("DB_PASSWORD"),
         "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT", default="5432"),
+        "PORT": config("DB_PORT"),
     }
 }
 
-# =========================
+# =====================================================
 # STATIC
-# =========================
+# =====================================================
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# =========================
-# FIREBASE (Render safe path)
-# =========================
+# =====================================================
+# FIREBASE
+# =====================================================
+FCM_PATH = str(BASE_DIR) + config("FCM_JSON_SDK")
+cred = credentials.Certificate(FCM_PATH)
+FIREBASE_APP = initialize_app(cred)
 
-FCM_JSON_PATH = config("FCM_JSON_SDK", default=None)
-
-if FCM_JSON_PATH and os.path.exists(FCM_JSON_PATH):
-    cred = credentials.Certificate(FCM_JSON_PATH)
-    FIREBASE_APP = initialize_app(cred)
-else:
-    FIREBASE_APP = None
+USER_FCM_PATH = str(BASE_DIR) + config("FCM_JSON_SDK")
+new_cred = credentials.Certificate(USER_FCM_PATH)
+FIREBASE_MESSAGING_APP = initialize_app(new_cred, name="user_app")
 
 FCM_DJANGO_SETTINGS = {
     "DEFAULT_FIREBASE_APP": FIREBASE_APP,
@@ -106,21 +106,32 @@ FCM_DJANGO_SETTINGS = {
     "DELETE_INACTIVE_DEVICES": True,
 }
 
-# =========================
+# =====================================================
+# PHONE VERIFY (REQUIRED)
+# =====================================================
+PHONE_VERIFICATION = {
+    "APP_NAME": "oppvenuz",
+    "SECURITY_CODE_LENGTH": 6,
+    "SESSION_TOKEN_LENGTH": 32,
+    "MAX_RETRIES": 5,
+    "MESSAGE": "Your Oppvenuz OTP is {security_code}",
+}
+
+# =====================================================
 # EMAIL
-# =========================
+# =====================================================
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 
-# =========================
+# =====================================================
 # PAYU
-# =========================
+# =====================================================
 PAYU_MERCHANT_KEY = config("PAYU_MERCHANT_KEY")
 PAYU_MERCHANT_SALT = config("PAYU_MERCHANT_SALT")
 PAYU_MODE = config("PAYU_MODE")
 
-# =========================
+# =====================================================
 # JWT
-# =========================
+# =====================================================
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(weeks=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(weeks=6),
@@ -129,45 +140,45 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-# =========================
+# =====================================================
 # URLS
-# =========================
+# =====================================================
 ROOT_URLCONF = "oppvenuz.urls"
 WSGI_APPLICATION = "oppvenuz.wsgi.application"
 
-# =========================
+# =====================================================
 # TEMPLATES
-# =========================
+# =====================================================
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "APP_DIRS": True,
-        "OPTIONS": {"context_processors": [
-            "django.template.context_processors.debug",
-            "django.template.context_processors.request",
-            "django.contrib.auth.context_processors.auth",
-            "django.contrib.messages.context_processors.messages",
-        ]},
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
     },
 ]
 
-# =========================
+# =====================================================
 # PASSWORD VALIDATORS
-# =========================
+# =====================================================
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_TZ = True
 
-# =========================
-# LOGGING
-# =========================
+# =====================================================
+# LOGGING SAFE
+# =====================================================
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
