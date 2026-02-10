@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from decouple import config
-import dj_database_url
 from firebase_admin import initialize_app, credentials
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -68,11 +67,19 @@ MIDDLEWARE = [
 ]
 
 # =========================
-# DATABASE (Render)
+# DATABASE (Render direct vars)
 # =========================
 DATABASES = {
-    "default": dj_database_url.parse(config("DATABASE_URL"))
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": config("DB_NAME"),
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT", default="5432"),
+    }
 }
+
 
 # =========================
 # STATIC
