@@ -157,7 +157,11 @@ USE_TZ = True
 # --------------------------------------------------
 # EMAIL
 # --------------------------------------------------
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")PHONE_VERIFICATION = {
+    "BACKEND": "phone_verify.backends.base.BaseBackend",
+}
+
+
 
 # --------------------------------------------------
 # AWS S3 (optional – env based)
