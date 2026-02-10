@@ -107,7 +107,6 @@ from .serializers import (
     PromotionalMesssageSerializer,
 )
 from service.serializers import AddVendorServiceSerializers
-from oppvenuz.settings.settings import DEFAULT_FROM_EMAIL
 from oauth2_provider.models import Application
 from utilities.constants import FCM_BASE_URL
 from service.utils import get_or_create_users_cart_url, update_user_cart_url
@@ -567,7 +566,7 @@ class UserSignUpAPIView(CreateAPIView):
 
                 """"
                 template_id = "d-f31d699a4f884c4ea595b99e27a54bf3"
-                sender = DEFAULT_FROM_EMAIL
+                sender = settings.settings.DEFAULT_FROM_EMAIL
                 data_dict = {"user_name": obj.fullname}
                 ForgotPasswordRequestView.send_mail(self, template_id, sender, obj.email, data_dict)
                 """
@@ -1376,7 +1375,7 @@ class UserForgotPasswordRequestView(GenericAPIView):
                     )
 
                     # template_id = "d-1772e8ac6b5442e68975394ea71a4957"
-                    # sender = DEFAULT_FROM_EMAIL
+                    # sender = settings.settings.DEFAULT_FROM_EMAIL
                     # data_dict = {"user_name": user.fullname, "reset_link": reset_url}
                     # ForgotPasswordRequestView.send_mail(self, template_id, sender, email, data_dict)
 
@@ -1442,7 +1441,7 @@ class VendorForgotPasswordRequestView(GenericAPIView):
                     )
 
                     # template_id = "d-1772e8ac6b5442e68975394ea71a4957"
-                    # sender = DEFAULT_FROM_EMAIL
+                    # sender = settings.settings.DEFAULT_FROM_EMAIL
                     # data_dict = {"user_name": user.fullname, "reset_link": reset_url}
                     # ForgotPasswordRequestView.send_mail(self, template_id, sender, vendor_email, data_dict)
 
@@ -1659,9 +1658,9 @@ class InviteUserView(GenericAPIView):
         fullname = request.data["fullname"]
         u_type = request.data.get("role")
 
-        if request.META["HTTP_HOST"] == STAGING_API_URL:
+        if request.META["HTTP_HOST"] == settings.STAGING_API_URL:
             client = dev_client
-        elif request.META["HTTP_HOST"] == PROD_API_URL:
+        elif request.META["HTTP_HOST"] == settings.PROD_API_URL:
             client = staging_client
         else:
             client = dev_client
@@ -2492,7 +2491,7 @@ class SendContactUsAPIView(GenericAPIView):
 
         # template_id = "d-694061e3ab774807aed2ad0eda8d85b8"
         template_id = constants.VENDOR_FILLED_CONTACT_US_TEMPLATE
-        sender = DEFAULT_FROM_EMAIL
+        sender = settings.settings.DEFAULT_FROM_EMAIL
         data_dict = {
             "vendor_name": user.fullname,
             "vendor_email": user.email,
@@ -2896,7 +2895,7 @@ class AppleSinInView(CreateAPIView):
                 options={"verify_signature": False},
                 algorithms=["RS256"],
                 audience="https://appleid.apple.com",
-                issuer=f"https://appleid.apple.com/{SOCIAL_AUTH_APPLE_ID_TEAM}",
+                issuer=f"https://appleid.apple.com/{settings.SOCIAL_AUTH_APPLE_ID_TEAM}",
             )
         except jwt.ExpiredSignatureError:
             self.response_format["data"] = None
