@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from decouple import config
-from firebase_admin import initialize_app, credentials
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -89,22 +88,7 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# =====================================================
-# FIREBASE
-# =====================================================
-FCM_PATH = str(BASE_DIR) + config("FCM_JSON_SDK")
-cred = credentials.Certificate(FCM_PATH)
-FIREBASE_APP = initialize_app(cred)
 
-USER_FCM_PATH = str(BASE_DIR) + config("FCM_JSON_SDK")
-new_cred = credentials.Certificate(USER_FCM_PATH)
-FIREBASE_MESSAGING_APP = initialize_app(new_cred, name="user_app")
-
-FCM_DJANGO_SETTINGS = {
-    "DEFAULT_FIREBASE_APP": FIREBASE_APP,
-    "ONE_DEVICE_PER_USER": True,
-    "DELETE_INACTIVE_DEVICES": True,
-}
 
 # =====================================================
 # PHONE VERIFY (REQUIRED)
