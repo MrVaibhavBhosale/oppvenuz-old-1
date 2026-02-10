@@ -157,11 +157,7 @@ USE_TZ = True
 # --------------------------------------------------
 # EMAIL
 # --------------------------------------------------
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")PHONE_VERIFICATION = {
-    "BACKEND": "phone_verify.backends.base.BaseBackend",
-}
-
-
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 
 # --------------------------------------------------
 # AWS S3 (optional – env based)
@@ -170,15 +166,6 @@ AWS_ACCESS_KEY_ID = config("s3AccessKey", default=None)
 AWS_SECRET_ACCESS_KEY = config("s3Secret", default=None)
 AWS_STORAGE_BUCKET_NAME = config("S3_BUCKET_NAME", default=None)
 AWS_S3_REGION_NAME = "ap-south-1"
-
-# --------------------------------------------------
-# SOCIAL AUTH
-# --------------------------------------------------
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY", default="")
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET", default="")
-
-SOCIAL_AUTH_FACEBOOK_KEY = config("SOCIAL_AUTH_FACEBOOK_KEY", default="")
-SOCIAL_AUTH_FACEBOOK_SECRET = config("SOCIAL_AUTH_FACEBOOK_SECRET", default="")
 
 # --------------------------------------------------
 # PROJECT / INTERNAL TOKENS
@@ -202,6 +189,10 @@ EINVITE_BEARER_TOKEN = config("EINVITE_BEARER_TOKEN", default=None)
 SIGNDESK_API_KEY = config("SIGNDESK_API_KEY", default=None)
 SIGNDESK_APPLICATION_ID = config("SIGNDESK_APPLICATION_ID", default=None)
 
+PHONE_VERIFICATION = {
+    "BACKEND": "phone_verify.backends.base.BaseBackend",
+}
+
 # --------------------------------------------------
 # TEXT LOCAL / SMS
 # --------------------------------------------------
@@ -211,6 +202,15 @@ TEXT_LOCAL_API_KEY = config("TEXT_LOCAL_API_KEY", default=None)
 # APPLE / SUBSCRIPTION / OPTIONAL
 # --------------------------------------------------
 OPTIONAL_SHARED_SECRET = config("OPTIONAL_SHARED_SECRET", default=None)
+
+# --------------------------------------------------
+# SOCIAL AUTH
+# --------------------------------------------------
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY", default="")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET", default="")
+
+SOCIAL_AUTH_FACEBOOK_KEY = config("SOCIAL_AUTH_FACEBOOK_KEY", default="")
+SOCIAL_AUTH_FACEBOOK_SECRET = config("SOCIAL_AUTH_FACEBOOK_SECRET", default="")
 
 # --------------------------------------------------
 # LOGGING (Render safe – console)
