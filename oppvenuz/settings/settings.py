@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from decouple import config
+import json
 from firebase_admin import initialize_app, credentials
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -10,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # SECURITY
 # =========================
 SECRET_KEY = config("SECRET_KEY")
-DEBUG = config("DEBUG", default=False, cast=bool)
+DEBUG = False
 ALLOWED_HOSTS = ["*"]
 
 # =========================
@@ -67,7 +68,7 @@ MIDDLEWARE = [
 ]
 
 # =========================
-# DATABASE (Render direct vars)
+# DATABASE
 # =========================
 DATABASES = {
     "default": {
@@ -80,7 +81,6 @@ DATABASES = {
     }
 }
 
-
 # =========================
 # STATIC
 # =========================
@@ -89,15 +89,16 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # =========================
-# FIREBASE
+# FIREBASE (Render safe path)
 # =========================
-FCM_JSON = config("FCM_JSON_SDK")
-cred = credentials.Certificate(FCM_JSON)
-FIREBASE_APP = initialize_app(cred)
 
-USER_FCM_JSON = config("USER_FCM_JSON_SDK")
-new_cred = credentials.Certificate(USER_FCM_JSON)
-FIREBASE_MESSAGING_APP = initialize_app(new_cred, name="user_app")
+FCM_JSON_PATH = config("FCM_JSON_SDK", default=None)
+
+if FCM_JSON_PATH and os.path.exists(FCM_JSON_PATH):
+    cred = credentials.Certificate(FCM_JSON_PATH)
+    FIREBASE_APP = initialize_app(cred)
+else:
+    FIREBASE_APP = None
 
 FCM_DJANGO_SETTINGS = {
     "DEFAULT_FIREBASE_APP": FIREBASE_APP,
@@ -165,7 +166,7 @@ TIME_ZONE = "UTC"
 USE_TZ = True
 
 # =========================
-# LOGGING SAFE
+# LOGGING
 # =========================
 LOGGING = {
     "version": 1,
