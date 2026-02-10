@@ -2,6 +2,8 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from decouple import config
+STAGING_API_URL = config("STAGING_API_URL", default="https://staging.oppvenuz.com/api/", cast=str)
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 PROJECT_ROOT = BASE_DIR
 
