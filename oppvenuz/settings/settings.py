@@ -177,6 +177,38 @@ SOCIAL_AUTH_FACEBOOK_KEY = config("SOCIAL_AUTH_FACEBOOK_KEY", default="")
 SOCIAL_AUTH_FACEBOOK_SECRET = config("SOCIAL_AUTH_FACEBOOK_SECRET", default="")
 
 # --------------------------------------------------
+# PROJECT / INTERNAL TOKENS
+# --------------------------------------------------
+CLIENT_ID = config("CLIENT_ID", default=None)
+BASIC_TOKEN = config("BASIC_TOKEN", default=None)
+PROJECT_ID = config("PROJECT_ID", default=None)
+
+DEVELOP_BRANCH_API_KEY = config("DEVELOP_BRANCH_API_KEY", default=None)
+STAGING_BRANCH_API_KEY = config("STAGING_BRANCH_API_KEY", default=None)
+
+# --------------------------------------------------
+# PLACID (E-Invite / Image generation)
+# --------------------------------------------------
+PLACID_TEMPLATE_URL = config("PLACID_TEMPLATE_URL", default=None)
+EINVITE_BEARER_TOKEN = config("EINVITE_BEARER_TOKEN", default=None)
+
+# --------------------------------------------------
+# SIGNDESK (KYC / Agreement)
+# --------------------------------------------------
+SIGNDESK_API_KEY = config("SIGNDESK_API_KEY", default=None)
+SIGNDESK_APPLICATION_ID = config("SIGNDESK_APPLICATION_ID", default=None)
+
+# --------------------------------------------------
+# TEXT LOCAL / SMS
+# --------------------------------------------------
+TEXT_LOCAL_API_KEY = config("TEXT_LOCAL_API_KEY", default=None)
+
+# --------------------------------------------------
+# APPLE / SUBSCRIPTION / OPTIONAL
+# --------------------------------------------------
+OPTIONAL_SHARED_SECRET = config("OPTIONAL_SHARED_SECRET", default=None)
+
+# --------------------------------------------------
 # LOGGING (Render safe – console)
 # --------------------------------------------------
 LOGGING = {
