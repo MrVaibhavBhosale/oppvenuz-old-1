@@ -3,10 +3,13 @@ from datetime import timedelta
 from pathlib import Path
 from decouple import config
 
+
 # --------------------------------------------------
 # BASE DIR
 # --------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+PROJECT_ROOT = BASE_DIR
 
 # --------------------------------------------------
 # SECURITY
