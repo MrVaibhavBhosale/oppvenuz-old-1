@@ -6,7 +6,7 @@ import os
 from datetime import timedelta
 from decouple import config
 from pathlib import Path
-from firebase_admin import initialize_app, credentials
+
 
 # BUILD PATHS FIRST - Render safe
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -23,15 +23,6 @@ PROD_API_URL = config("PROD_API_URL", default="https://www.oppvenuz.com/api/")
 SOCIAL_AUTH_APPLE_ID_TEAM = config("SOCIAL_AUTH_APPLE_ID_TEAM", default="Y294V8N5W3")
 VENDOR_FROM_EMAIL = config("VENDOR_FROM_EMAIL", default="vendor@oppvenuz.com")
 
-# Firebase
-SERVICE_ACCOUNT_PATH = str(BASE_DIR) + config("FCM_JSON_SDK", default="/firebase/oppvenuz-274310-firebase-adminsdk-mzl12-84b160d3f7.json")
-cred = credentials.Certificate(SERVICE_ACCOUNT_PATH)
-FIREBASE_APP = initialize_app(cred)
-
-defaultValue = "/firebase/staging-oppvenuz-user-firebase-adminsdk-dmq56-75daeaa255.json"
-custom_credentials_path = str(BASE_DIR) + config("USER_FCM_JSON_SDK", default=defaultValue)
-new_cred = credentials.Certificate(custom_credentials_path)
-FIREBASE_MESSAGING_APP = initialize_app(new_cred, name="user_app")
 
 # Apps
 INSTALLED_APPS = [
